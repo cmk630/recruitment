@@ -1,13 +1,15 @@
 package com.cmk630.recruitment.interceptor;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+import java.util.UUID;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
-import java.util.UUID;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 모든 API 요청과 응답을 로깅하기 위한 인터셉터입니다.
@@ -38,6 +40,15 @@ public class LogInterceptor implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		String uuid = (String) request.getAttribute(LOG_ID);
+
+		// 요청 본문 로깅 추가
+		if (request instanceof ContentCachingRequestWrapper cachingRequest) {
+			byte[] content = cachingRequest.getContentAsByteArray();
+			if (content.length > 0) {
+				log.info("Request Body [{}]: {}", uuid, new String(content, "UTF-8"));
+			}
+		}
+
 		log.info("RESPONSE [{}][{}][{}] STATUS: {}", uuid, request.getMethod(), request.getRequestURI(), response.getStatus());
 	}
 
