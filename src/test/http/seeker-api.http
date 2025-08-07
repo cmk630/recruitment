@@ -1,0 +1,64 @@
+### 1. 새로운 구직자 추가 (성공)
+POST http://localhost:8080/job-seekers
+Content-Type: application/json
+
+{
+  "name": "최테스트",
+  "email": "test-user@example.com",
+  "password": "ValidPass123!"
+}
+
+### 1-1. 구직자 추가(성공)
+POST http://localhost:8080/job-seekers
+Content-Type: application/json
+
+{
+  "name": "박테스트",
+  "email": "test-user1@example.com",
+  "password": "ValidPass123!"
+}
+
+### 1-2. 구직자 추가(성공)
+POST http://localhost:8080/job-seekers
+Content-Type: application/json
+
+{
+  "name": "강테스트",
+  "email": "test-user2@example.com",
+  "password": "ValidPass123!"
+}
+
+### 2. 구직자 추가 (실패 - 이메일 유효성 오류)
+POST http://localhost:8080/job-seekers
+Content-Type: application/json
+
+{
+  "name": "박테스트",
+  "email": "invalid-email",
+  "password": "ValidPass123!"
+}
+
+
+### 2. 구직자 추가 (실패 - 필수항목이 누락된 경우)
+POST http://localhost:8080/job-seekers
+Content-Type: application/json
+
+{
+   "email": "test-user@example.com"
+}
+
+### 3. 구직자 목록 전체 조회
+GET http://localhost:8080/job-seekers
+
+
+### 4. 구직자 정보 삭제 (ID: 1)
+DELETE http://localhost:8080/job-seekers/1
+
+### 5. 특정 구직자의 지원 이력 조회 (ID: 1)
+GET http://localhost:8080/job-seekers/1/applies
+
+### 5-1. 특정 구직자의 지원 이력 조회 - 서류 지원 이력이 존재하지 않을 경우 (ID: 3)
+GET http://localhost:8080/job-seekers/3/applies
+
+### 5-2. 특정 구직자의 지원 이력 조회 - 존재하지 않는 job_seeker_id 조회시 (ID: 100)
+GET http://localhost:8080/job-seekers/100/applies

@@ -1,0 +1,107 @@
+### 1. 새로운 기업 추가 (성공)
+POST http://localhost:8080/companies
+Content-Type: application/json
+
+{
+  "name": "테스트 컴퍼니",
+  "companyRegistrationNumber": "111-22-33333"
+}
+
+### 1-1. 새로운 기업 추가 (성공)
+POST http://localhost:8080/companies
+Content-Type: application/json
+
+{
+  "name": "테스트 컴퍼니2",
+  "companyRegistrationNumber": "111-22-33334"
+}
+
+
+### 2. 채용 공고 등록 (ID 1번 기업에)
+POST http://localhost:8080/companies/1/job-description
+Content-Type: application/json
+
+{
+  "title": "IntelliJ HTTP Client 전문가 채용"
+}
+
+### 2-1. 채용 공고 등록 (ID 1번 기업에)
+POST http://localhost:8080/companies/1/job-description
+Content-Type: application/json
+
+{
+  "title": "Backend 전문가 채용"
+}
+
+### 2-2. 채용 공고 등록 (ID 2번 기업에)
+POST http://localhost:8080/companies/2/job-description
+Content-Type: application/json
+
+{
+  "title": "IntelliJ HTTP Client 전문가 채용2"
+}
+
+### 2-3. 채용 공고 등록 (ID 2번 기업에)
+POST http://localhost:8080/companies/2/job-description
+Content-Type: application/json
+
+{
+  "title": "Backend 전문가 채용2"
+}
+
+
+### 3. 채용 공고 삭제 (ID 1번 기업의 ID 1번 공고)
+DELETE http://localhost:8080/companies/1/job-description/1
+
+### 3-1. 채용 공고 삭제 - 존재하지 않는 company_id로 삭제 시도시 (ID 100번 기업의 ID 1번 공고)
+DELETE http://localhost:8080/companies/100/job-description/1
+
+### 3-2. 채용 공고 삭제 - 존재하지 않는 job_description_id로 삭제 시도시 (ID 1번 기업의 ID 100번 공고)
+DELETE http://localhost:8080/companies/1/job-description/100
+
+### 3-3. 채용 공고 삭제 - job_description_id이 company에 종속되지 않는 경우 (ID 1번 기업의 ID 2번 공고)
+DELETE http://localhost:8080/companies/1/job-description/2
+
+### 4. 기업별 지원자 목록 조회 (ID 1번 기업)
+GET http://localhost:8080/companies/1/applies
+
+
+### 5. 서류 지원하기 (1번 유저 -> 1번 회사 -> 1번 공고)
+POST http://localhost:8080/applies
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "companyId": 1,
+  "jobDescriptionId": 2
+}
+
+### 5. 서류 지원하기 (2번 유저 -> 1번 회사 -> 1번 공고)
+POST http://localhost:8080/applies
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "companyId": 1,
+  "jobDescriptionId": 2
+}
+
+### 5. 서류 지원하기 (1번 유저 -> 2번 회사 -> 4번 공고)
+POST http://localhost:8080/applies
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "companyId": 2,
+  "jobDescriptionId":4
+}
+
+### 5. 서류 지원하기 (2번 유저 -> 2번 회사 -> 4번 공고)
+POST http://localhost:8080/applies
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "companyId": 2,
+  "jobDescriptionId":4
+}
